@@ -1,15 +1,9 @@
-/* Logo Styling */
-.nav-logo {
-    height: 40px;
-    width: auto;
-    margin-right: 10px;
-    vertical-align: middle;
+/* Logo specific styles */
+.logo-img,
+.splash-logo {
     border-radius: 50%;
-    /* Optional: circular logo */
-    object-fit: contain;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+    border: 2px solid var(--accent-color);
+    /* Optional: adds a nice border */
 }
