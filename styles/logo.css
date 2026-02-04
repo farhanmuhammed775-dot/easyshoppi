@@ -1,0 +1,15 @@
+/* Logo Styling */
+.nav-logo {
+    height: 40px;
+    width: auto;
+    margin-right: 10px;
+    vertical-align: middle;
+    border-radius: 50%;
+    /* Optional: circular logo */
+    object-fit: contain;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}

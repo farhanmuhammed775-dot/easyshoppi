@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyShoppi | Future of Commerce</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/layout.css">
+</head>
+
+<body data-page="home">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="images/logo.png" alt="EasyShoppi Logo" class="logo-img" onerror="this.style.display='none'">
+            <span class="logo-text">EasyShoppi<span class="dot">.</span></span>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="badge" id="cart-count">0</span>
+            </a>
+            <a href="login.html" class="btn btn-outline">Login</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <h1>Experience the Future</h1>
+            <p>Curated collection of next-gen technology and premium peripherals.</p>
+            <a href="shop.html" class="btn btn-primary">Explorer Collection</a>
+        </div>
+    </header>
+
+    <!-- Featured Products -->
+    <section class="container">
+        <h2 style="font-size: 2rem; margin-bottom: 20px; color: var(--white);">Featured Drops</h2>
+        <div id="featured-products" class="product-grid">
+            <!-- Injected dependig on store -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer
+        style="text-align: center; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--glass-border);">
+        <p>&copy; 2026 EasyShoppi. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="scripts/app.js"></script>
+</body>
+
+</html>

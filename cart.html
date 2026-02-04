@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | EasyShoppi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body data-page="cart">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="images/logo.png" alt="EasyShoppi Logo" class="logo-img" onerror="this.style.display='none'">
+            <span class="logo-text">EasyShoppi<span class="dot">.</span></span>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html" class="active">Cart</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="badge" id="cart-count">0</span>
+            </a>
+            <a href="login.html" class="btn btn-outline">Login</a>
+        </div>
+    </nav>
+
+    <div style="padding-top: 120px;" class="container">
+        <h1>Shopping Cart</h1>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-top: 40px;">
+
+            <!-- Cart Items -->
+            <div id="cart-items">
+                <!-- Injected by app.js -->
+            </div>
+
+            <!-- Summary -->
+            <div class="glass-panel" style="padding: 30px; height: fit-content;">
+                <h3>Order Summary</h3>
+                <div style="display: flex; justify-content: space-between; margin: 20px 0; font-size: 1.2rem;">
+                    <span>Total</span>
+                    <span id="cart-total" style="color: var(--accent-color); font-weight: bold;">₹0</span>
+                </div>
+                <button id="checkoutBtn" class="btn btn-primary" style="width: 100%;">Proceed to Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer
+        style="text-align: center; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--glass-border); margin-top: 50px">
+        <p>&copy; 2026 EasyShoppi. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        import { initPayment } from './scripts/payment.js';
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            initPayment();
+        });
+    </script>
+    <script type="module" src="scripts/app.js"></script>
+</body>
+
+</html>
