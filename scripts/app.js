@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (page === 'shop') initShop();
     if (page === 'cart') initCart();
     if (page === 'admin') initAdmin();
+    if (page === 'product') initProduct();
 });
 
 /* Helper Functions for pages (can be moved to modules) */
@@ -108,10 +109,14 @@ function initHome() {
 
     container.innerHTML = products.map(p => `
         <div class="product-card glass-panel">
-            <img src="${p.image}" alt="${p.name}">
-            <div class="p-info">
-                <h3>${p.name}</h3>
-                <p class="price">${p.displayPrice}</p>
+            <a href="product.html?id=${p.id}" style="text-decoration: none; color: inherit; display: block;">
+                <img src="${p.image}" alt="${p.name}">
+                <div class="p-info">
+                    <h3>${p.name}</h3>
+                    <p class="price">${p.displayPrice}</p>
+                </div>
+            </a>
+            <div style="padding: 15px; padding-top: 0;">
                 <button class="btn btn-primary" onclick="window.addToCart(${p.id})">Add to Cart</button>
             </div>
         </div>
@@ -136,15 +141,69 @@ function initShop() {
 
     container.innerHTML = products.map(p => `
         <div class="product-card glass-panel">
-            <img src="${p.image}" alt="${p.name}">
-            <div class="p-info">
-                <h3>${p.name}</h3>
-                <p class="price">${p.displayPrice}</p>
+            <a href="product.html?id=${p.id}" style="text-decoration: none; color: inherit; display: block;">
+                <img src="${p.image}" alt="${p.name}">
+                <div class="p-info">
+                    <h3>${p.name}</h3>
+                    <p class="price">${p.displayPrice}</p>
+                </div>
+            </a>
+            <div style="padding: 15px; padding-top: 0;">
                 <button class="btn btn-primary" onclick="window.addToCart(${p.id})">Add to Cart</button>
             </div>
         </div>
     `).join('');
 }
+
+function initProduct() {
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get('id'));
+    const container = document.getElementById('product-content');
+
+    if (!id || !container) return;
+
+    const product = store.getProducts().find(p => p.id === id);
+
+    if (!product) {
+        container.innerHTML = '<h2>Product not found</h2>';
+        return;
+    }
+
+    // Prepare images array (if only one image, make it an array)
+    const images = product.images && product.images.length > 0 ? product.images : [product.image];
+
+    container.innerHTML = `
+        <div class="gallery-container">
+            <img id="main-image" src="${images[0]}" alt="${product.name}" class="glass-panel">
+            <div class="thumbnail-list">
+                ${images.map((img, index) => `
+                    <img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" 
+                         onclick="changeMainImage(this.src, this)">
+                `).join('')}
+            </div>
+        </div>
+        <div class="product-info glass-panel" style="padding: 40px;">
+            <h1>${product.name}</h1>
+            <p class="product-price">${product.displayPrice}</p>
+            
+            <p class="product-desc">
+                ${product.description ? product.description.replace(/\n/g, '<br>') : 'No description available for this product.'}
+            </p>
+
+            <button class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem; margin-top: 20px;" 
+                    onclick="window.addToCart(${product.id})">
+                Add to Cart
+            </button>
+        </div>
+    `;
+}
+
+// Global helper for gallery
+window.changeMainImage = (src, thumb) => {
+    document.getElementById('main-image').src = src;
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+};
 
 function initCart() {
     const cart = store.getCart();
