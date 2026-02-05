@@ -36,6 +36,42 @@ const MO_PRODUCTS = [
         image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=1000",
         category: "Peripherals",
         description: "Ultra-lightweight design with 20k DPI sensor."
+    },
+    {
+        id: 5,
+        name: "Quantum VR Headset",
+        price: 59999,
+        displayPrice: "₹599",
+        image: "https://images.unsplash.com/photo-1622979135225-d2ba269fb1ac?q=80&w=1000",
+        category: "Gaming",
+        description: "Experience virtual worlds with 8K resolution and haptic feedback."
+    },
+    {
+        id: 6,
+        name: "Aero Drone 4K",
+        price: 129999,
+        displayPrice: "₹1299",
+        image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=1000",
+        category: "Tech",
+        description: "Professional camera drone with obstacle avoidance and 30min flight time."
+    },
+    {
+        id: 7,
+        name: "Handheld Gaming Console",
+        price: 39999,
+        displayPrice: "₹399",
+        image: "https://images.unsplash.com/photo-1592840496694-26d035b52b48?q=80&w=1000",
+        category: "Gaming",
+        description: "Play your favorite AAA titles on the go with this powerful handheld."
+    },
+    {
+        id: 8,
+        name: "Smart AR Glasses",
+        price: 69999,
+        displayPrice: "₹699",
+        image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?q=80&w=1000",
+        category: "Wearables",
+        description: "Overlay digital information onto the real world with style."
     }
 ];
 
@@ -45,22 +81,28 @@ class Store {
     }
 
     init() {
-        const storedProducts = localStorage.getItem('products');
-        let shouldInit = !storedProducts;
+        let storedProducts = localStorage.getItem('products');
+        let currentProducts = [];
 
         if (storedProducts) {
             try {
-                const parsed = JSON.parse(storedProducts);
-                if (!Array.isArray(parsed) || parsed.length === 0) {
-                    shouldInit = true;
-                }
+                currentProducts = JSON.parse(storedProducts);
             } catch (e) {
-                shouldInit = true;
+                currentProducts = [];
             }
         }
 
-        if (shouldInit) {
-            localStorage.setItem('products', JSON.stringify(MO_PRODUCTS));
+        // Merge logic: Add MO_PRODUCTS if they don't exist in currentProducts
+        let hasChanges = false;
+        MO_PRODUCTS.forEach(mp => {
+            if (!currentProducts.find(cp => cp.id === mp.id)) {
+                currentProducts.push(mp);
+                hasChanges = true;
+            }
+        });
+
+        if (hasChanges || currentProducts.length === 0) {
+            localStorage.setItem('products', JSON.stringify(currentProducts));
         }
         if (!localStorage.getItem('cart')) {
             localStorage.setItem('cart', JSON.stringify([]));
