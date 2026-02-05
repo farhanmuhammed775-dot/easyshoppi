@@ -146,8 +146,8 @@
 
     /* Adjust nav actions for mobile */
     .nav-actions {
-        margin-right: 50px;
-        /* Space for hamburger */
+        margin-right: 0;
+        gap: 15px;
     }
 }
 
