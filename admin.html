@@ -33,9 +33,20 @@
                         style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px;">
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Image URL</label>
-                    <input type="url" id="p-image" placeholder="https://..." required
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Product
+                        Description</label>
+                    <textarea id="p-desc" required rows="4"
+                        style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px; resize: vertical;"></textarea>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 8px; color: var(--text-secondary);">Product Images
+                        (Select Multiple)</label>
+                    <input type="file" id="p-images" multiple accept="image/*"
                         style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; border-radius: 4px;">
+
+                    <!-- Preview Container -->
+                    <div id="image-preview" style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;"></div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Add Product</button>
             </form>

@@ -185,30 +185,101 @@ function initAdmin() {
     }
 
     const form = document.getElementById('addProductForm');
+    const imageInput = document.getElementById('p-images');
+    const previewContainer = document.getElementById('image-preview');
+    let processedImages = [];
+
+    // Image Preview & Processing Logic
+    if (imageInput) {
+        imageInput.addEventListener('change', async (e) => {
+            previewContainer.innerHTML = '';
+            processedImages = [];
+            const files = Array.from(e.target.files);
+
+            for (const file of files) {
+                // Resize and convert to Base64
+                try {
+                    const base64 = await resizeImage(file);
+                    processedImages.push(base64);
+
+                    // Show Preview
+                    const img = document.createElement('img');
+                    img.src = base64;
+                    img.style.width = '80px';
+                    img.style.height = '80px';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '4px';
+                    img.style.border = '1px solid var(--glass-border)';
+                    previewContainer.appendChild(img);
+                } catch (err) {
+                    console.error("Error processing image", err);
+                }
+            }
+        });
+    }
+
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('p-name').value;
             const price = parseFloat(document.getElementById('p-price').value) * 100; // to paise
-            const img = document.getElementById('p-image').value;
+            const description = document.getElementById('p-desc').value;
+
+            if (processedImages.length === 0) {
+                alert('Please select at least one image.');
+                return;
+            }
 
             const newProduct = {
                 id: Date.now(),
                 name,
                 price,
                 displayPrice: '₹' + (price / 100),
-                image: img,
+                image: processedImages[0], // Main thumbnail
+                images: processedImages, // All images
                 category: 'New',
-                description: 'New product'
+                description: description
             };
 
-            const products = store.getProducts();
-            products.push(newProduct);
-            localStorage.setItem('products', JSON.stringify(products));
-
-            alert('Product added!');
-            form.reset();
+            try {
+                const products = store.getProducts();
+                products.push(newProduct);
+                localStorage.setItem('products', JSON.stringify(products));
+                alert('Product added successfully!');
+                form.reset();
+                previewContainer.innerHTML = '';
+                processedImages = [];
+            } catch (err) {
+                alert('Storage full! Try using smaller images or fewer products.');
+                console.error(err);
+            }
         });
     }
+}
+
+// Helper: Resize Image to reduce storage usage
+function resizeImage(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const MAX_WIDTH = 500;
+                const scaleSize = MAX_WIDTH / img.width;
+                canvas.width = MAX_WIDTH;
+                canvas.height = img.height * scaleSize;
+
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                // Compress to JPEG with 0.7 quality
+                resolve(canvas.toDataURL('image/jpeg', 0.7));
+            };
+            img.src = event.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
 }
 
