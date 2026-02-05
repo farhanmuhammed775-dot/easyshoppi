@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/global.css">
     <link rel="stylesheet" href="styles/layout.css">
+    <link rel="stylesheet" href="styles/cart.css">
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
@@ -17,7 +18,7 @@
 
     <div style="padding-top: 120px;" class="container">
         <h1>Shopping Cart</h1>
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-top: 40px;">
+        <div class="cart-layout">
 
             <!-- Cart Items -->
             <div id="cart-items">
@@ -25,7 +26,7 @@
             </div>
 
             <!-- Summary -->
-            <div class="glass-panel" style="padding: 30px; height: fit-content;">
+            <div class="glass-panel cart-summary">
                 <h3>Order Summary</h3>
                 <div style="display: flex; justify-content: space-between; margin: 20px 0; font-size: 1.2rem;">
                     <span>Total</span>

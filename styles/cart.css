@@ -1,0 +1,85 @@
+/* Cart Logic specific styles */
+
+.cart-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.cart-summary {
+    padding: 30px;
+    height: fit-content;
+}
+
+/* Cart Item Styling */
+.cart-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    align-items: center;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    /* Added radius for consistency */
+}
+
+.cart-item-info {
+    flex-grow: 1;
+}
+
+.cart-item-actions {
+    text-align: right;
+    min-width: 80px;
+    /* Prevent crushing on mobile */
+}
+
+.cart-remove-btn {
+    background: none;
+    border: none;
+    color: #ff5555;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .cart-layout {
+        grid-template-columns: 1fr;
+        /* Stack vertically */
+        gap: 20px;
+    }
+
+    .cart-item {
+        flex-wrap: wrap;
+        /* Allow wrapping if content is too wide */
+    }
+
+    .cart-item img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .cart-item-info h4 {
+        font-size: 1rem;
+    }
+
+    /* Move actions below info on very small screens if needed, 
+       or keep side-by-side but ensure space */
+    .cart-item-actions {
+        text-align: left;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        border-top: 1px solid var(--glass-border);
+        padding-top: 10px;
+    }
+}

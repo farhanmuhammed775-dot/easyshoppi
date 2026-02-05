@@ -241,15 +241,15 @@ function initCart() {
     }
 
     container.innerHTML = cart.map(item => `
-        <div class="cart-item glass-panel" style="display: flex; gap: 20px; margin-bottom: 20px; padding: 15px; align-items: center;">
-            <img src="${item.image}" style="width: 80px; height: 80px; object-fit: cover;" alt="${item.name}">
-            <div style="flex-grow: 1;">
+        <div class="cart-item glass-panel">
+            <img src="${item.image}" alt="${item.name}">
+            <div class="cart-item-info">
                 <h4>${item.name}</h4>
                 <p>${item.displayPrice} x ${item.quantity}</p>
             </div>
-            <div>
+            <div class="cart-item-actions">
                  <p style="font-weight: bold; margin-bottom: 5px;">₹${(item.price * item.quantity / 100).toFixed(2)}</p>
-                 <button onclick="window.removeFromCart(${item.id})" style="background: none; border: none; color: #ff5555; cursor: pointer; text-decoration: underline;">Remove</button>
+                 <button onclick="window.removeFromCart(${item.id})" class="cart-remove-btn">Remove</button>
             </div>
         </div>
     `).join('');
