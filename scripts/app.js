@@ -10,41 +10,70 @@ function renderNavbar() {
     const cart = store.getCart();
     const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
+    // Remove existing navbar if any (to prevent duplicates during SPA navigation if we had it)
+    const existingNav = document.querySelector('nav.navbar');
+    if (existingNav) existingNav.remove();
+
     const nav = document.createElement('nav');
-    nav.className = 'navbar glass-panel';
+    nav.className = 'navbar';
     nav.innerHTML = `
-        <div class="container nav-content">
-            <a href="index.html" class="logo">
-                <img src="logo.jpg" alt="Logo" class="nav-logo" onerror="this.style.display='none'; document.querySelector('.logo').innerText='EasyShoppi.';">
-                EasyShoppi<span class="dot">.</span>
+        <div class="nav-content">
+            <a href="index.html" class="logo-container">
+                <img src="images/logo.jpg" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                <span class="logo-text">EasyShoppi<span class="dot">.</span></span>
             </a>
+
+            <div class="nav-actions">
+                 <a href="cart.html" class="cart-icon">
+                    🛒 <span class="badge" id="cartBadge">${cartCount}</span>
+                </a>
+                
+                <button class="hamburger" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html">Shop</a></li>
                 ${user && user.role === 'admin' ? '<li><a href="admin.html">Admin</a></li>' : ''}
-            </ul>
-            <div class="nav-actions">
                 ${user
-            ? `<div class="user-menu">
-                         <span>Hi, ${user.name.split(' ')[0]}</span>
-                         <button id="logoutBtn" class="btn-text">Logout</button>
-                       </div>`
-            : `<a href="login.html" class="btn btn-primary">Login</a>`
+            ? `<li><a href="#" id="logoutBtn">Logout (${user.name.split(' ')[0]})</a></li>`
+            : `<li><a href="login.html" class="btn btn-outline" style="padding: 5px 15px; font-size: 0.9rem;">Login</a></li>`
         }
-                <a href="cart.html" class="cart-icon">
-                    🛒 <span class="badge" id="cartBadge">${cartCount}</span>
-                </a>
-            </div>
+            </ul>
         </div>
     `;
 
     // Insert at top of body
     document.body.prepend(nav);
 
-    // Event Listeners
+    // Hamburger Logic
+    const hamburger = nav.querySelector('.hamburger');
+    const navLinks = nav.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        // Optional: Animate hamburger
+        const spans = hamburger.querySelectorAll('span');
+        if (navLinks.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
+    });
+
+    // Event Listeners (Logout)
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             Auth.logout();
         });
     }
@@ -52,7 +81,8 @@ function renderNavbar() {
     // Subscribe to cart updates
     store.subscribe('item_added', () => {
         const newCount = store.getCart().reduce((acc, item) => acc + item.quantity, 0);
-        document.getElementById('cartBadge').textContent = newCount;
+        const badge = document.getElementById('cartBadge');
+        if (badge) badge.textContent = newCount;
     });
 }
 

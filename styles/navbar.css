@@ -4,15 +4,24 @@
     top: 0;
     left: 0;
     width: 100%;
-    transform: none;
+    height: 70px;
     z-index: 1000;
-    padding: 15px 30px;
+    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10, 25, 47, 0.85);
+    background: rgba(10, 25, 47, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .logo-container {
@@ -20,6 +29,7 @@
     align-items: center;
     gap: 12px;
     text-decoration: none;
+    z-index: 1002;
 }
 
 .logo-img {
@@ -34,8 +44,114 @@
     letter-spacing: -1px;
 }
 
+/* Desktop Navigation */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent-color);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-icon {
+    position: relative;
+    font-size: 1.2rem;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+
+/* Hamburger Menu (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+    padding: 0;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 3px;
+    background: var(--accent-color);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #112240;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        transition: right 0.3s ease-in-out;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+        z-index: 1001;
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    /* Adjust nav actions for mobile */
+    .nav-actions {
+        margin-right: 50px;
+        /* Space for hamburger */
+    }
+}
+
 /* Adjust hero to compensate for fixed nav */
 .hero {
     padding-top: 100px;
-    /* Reduced from header-height var if it was large, or set specific */
 }
