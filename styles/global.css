@@ -1,19 +1,22 @@
 /* Global Styles & Variables */
 :root {
     /* Color Palette */
-    --primary-color: #0a192f; /* Deep Navy */
-    --secondary-color: #112240; /* Lighter Navy */
-    --accent-color: #64ffda; /* Teal/Gold hybrid (Premium tech feel) */
+    --primary-color: #0a192f;
+    /* Deep Navy */
+    --secondary-color: #112240;
+    /* Lighter Navy */
+    --accent-color: #64ffda;
+    /* Teal/Gold hybrid (Premium tech feel) */
     --text-primary: #e6f1ff;
     --text-secondary: #8892b0;
     --white: #ffffff;
     --glass-bg: rgba(17, 34, 64, 0.75);
     --glass-border: rgba(230, 241, 255, 0.1);
-    
+
     /* Spacing & Layout */
     --container-width: 1200px;
     --header-height: 80px;
-    
+
     /* Transitions */
     --transition-speed: 0.3s;
 }
@@ -85,6 +88,17 @@ img {
 }
 
 .btn-primary:hover {
-    background: #4cdbb9; /* Slightly darker teal */
+    background: #4cdbb9;
+    /* Slightly darker teal */
     transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 24px;
+        /* Larger touch target */
+        font-size: 1.05rem;
+    }
 }

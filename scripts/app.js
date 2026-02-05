@@ -117,7 +117,7 @@ function initHome() {
                 </div>
             </a>
             <div style="padding: 15px; padding-top: 0;">
-                <button class="btn btn-primary" onclick="window.addToCart(${p.id})">Add to Cart</button>
+                <button class="btn btn-primary" onclick="window.buyNow(${p.id})">Buy Now</button>
             </div>
         </div>
     `).join('');
@@ -125,11 +125,20 @@ function initHome() {
 
 // Global exposure for inline onclicks (simplified for this demo)
 // Global exposure for inline onclicks (simplified for this demo)
+// Global exposure for inline onclicks
 window.addToCart = (id) => {
     const product = store.getProducts().find(p => p.id === id);
     if (product) {
         store.addToCart(product);
         alert('Added to cart!');
+    }
+};
+
+window.buyNow = (id) => {
+    const product = store.getProducts().find(p => p.id === id);
+    if (product) {
+        store.addToCart(product);
+        window.location.href = 'cart.html';
     }
 };
 
@@ -149,7 +158,7 @@ function initShop() {
                 </div>
             </a>
             <div style="padding: 15px; padding-top: 0;">
-                <button class="btn btn-primary" onclick="window.addToCart(${p.id})">Add to Cart</button>
+                <button class="btn btn-primary" onclick="window.buyNow(${p.id})">Buy Now</button>
             </div>
         </div>
     `).join('');
@@ -191,8 +200,8 @@ function initProduct() {
             </p>
 
             <button class="btn btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem; margin-top: 20px;" 
-                    onclick="window.addToCart(${product.id})">
-                Add to Cart
+                    onclick="window.buyNow(${product.id})">
+                Buy Now
             </button>
         </div>
     `;
