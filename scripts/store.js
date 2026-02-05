@@ -134,6 +134,13 @@ class Store {
         this.notify('item_added');
     }
 
+    removeFromCart(productId) {
+        let cart = this.getCart();
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        this.notify('item_removed');
+    }
+
     clearCart() {
         localStorage.setItem('cart', JSON.stringify([]));
         this.notify('cart_cleared');

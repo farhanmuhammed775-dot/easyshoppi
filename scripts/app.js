@@ -79,11 +79,14 @@ function renderNavbar() {
     }
 
     // Subscribe to cart updates
-    store.subscribe('item_added', () => {
+    const updateBadge = () => {
         const newCount = store.getCart().reduce((acc, item) => acc + item.quantity, 0);
         const badge = document.getElementById('cartBadge');
         if (badge) badge.textContent = newCount;
-    });
+    };
+
+    store.subscribe('item_added', updateBadge);
+    store.subscribe('item_removed', updateBadge);
 }
 
 /* Logic: Load Page Specifc Scipts */
@@ -140,6 +143,16 @@ window.buyNow = (id) => {
         store.addToCart(product);
         window.location.href = 'cart.html';
     }
+};
+
+window.removeFromCart = (id) => {
+    store.removeFromCart(id);
+    // UI updates automatically via subscription since initCart is called below? 
+    // Wait, subscription calls initCart? No, check subscription.
+    // Subscription logic: 
+    // store.subscribe('item_removed', () => { ...update badge... });
+    // We need to valid redraw cart.
+    initCart(); // Force redraw cart UI
 };
 
 /* Page Initializers */
@@ -235,7 +248,8 @@ function initCart() {
                 <p>${item.displayPrice} x ${item.quantity}</p>
             </div>
             <div>
-                 <p style="font-weight: bold;">₹${(item.price * item.quantity / 100).toFixed(2)}</p>
+                 <p style="font-weight: bold; margin-bottom: 5px;">₹${(item.price * item.quantity / 100).toFixed(2)}</p>
+                 <button onclick="window.removeFromCart(${item.id})" style="background: none; border: none; color: #ff5555; cursor: pointer; text-decoration: underline;">Remove</button>
             </div>
         </div>
     `).join('');
