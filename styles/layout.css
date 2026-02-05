@@ -100,13 +100,11 @@ section {
 }
 
 .hero h1 {
-    font-size: 4rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
     font-weight: 800;
     margin-bottom: 20px;
-    background: linear-gradient(to right, var(--white), var(--text-secondary));
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--white);
 }
 
 .hero p {
