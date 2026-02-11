@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | EasyShoppi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/layout.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .checkout-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: white;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+    </style>
+</head>
+
+<body data-page="checkout">
+
+    <div style="padding-top: 120px;" class="container">
+        <h1 style="text-align: center; margin-bottom: 40px;">Delivery Details</h1>
+
+        <div class="glass-panel checkout-container">
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" required placeholder="John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" rows="3" required placeholder="Street, Apartment, etc."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" required placeholder="Mumbai">
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" required placeholder="400001" pattern="[0-9]{6}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="9876543210" pattern="[0-9]{10}">
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary"
+                        style="width: 100%; padding: 15px; font-size: 1.1rem;">
+                        Proceed to Pay
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer
+        style="text-align: center; padding: 40px; color: var(--text-secondary); border-top: 1px solid var(--glass-border); margin-top: 50px">
+        <p>&copy; 2026 EasyShoppi. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="scripts/app.js"></script>
+</body>
+
+</html>

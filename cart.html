@@ -44,10 +44,8 @@
     </footer>
 
     <script type="module">
-        import { initPayment } from './scripts/payment.js';
-
         document.getElementById('checkoutBtn').addEventListener('click', () => {
-            initPayment();
+            window.location.href = 'checkout.html';
         });
     </script>
     <script type="module" src="scripts/app.js"></script>

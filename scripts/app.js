@@ -1,5 +1,6 @@
 import { store } from './store.js';
 import { Auth } from './auth.js';
+import { initPayment } from './payment.js';
 
 // DOM Elements
 const app = document.getElementById('app');
@@ -102,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (page === 'cart') initCart();
     if (page === 'admin') initAdmin();
     if (page === 'product') initProduct();
+    if (page === 'checkout') initCheckout();
 });
 
 /* Helper Functions for pages (can be moved to modules) */
@@ -337,6 +339,52 @@ function initAdmin() {
             }
         });
     }
+}
+
+function initCheckout() {
+    // Basic protection
+    const user = Auth.checkAuth();
+    if (!user) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    const cart = store.getCart();
+    if (cart.length === 0) {
+        window.location.href = 'shop.html';
+        return;
+    }
+
+    const form = document.getElementById('checkoutForm');
+    if (!form) return;
+
+    // Pre-fill if exists
+    const savedAddress = JSON.parse(localStorage.getItem('deliveryAddress'));
+    if (savedAddress) {
+        document.getElementById('fullName').value = savedAddress.fullName || '';
+        document.getElementById('address').value = savedAddress.address || '';
+        document.getElementById('city').value = savedAddress.city || '';
+        document.getElementById('pincode').value = savedAddress.pincode || '';
+        document.getElementById('phone').value = savedAddress.phone || '';
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const addressData = {
+            fullName: document.getElementById('fullName').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            pincode: document.getElementById('pincode').value,
+            phone: document.getElementById('phone').value
+        };
+
+        // Save address
+        localStorage.setItem('deliveryAddress', JSON.stringify(addressData));
+
+        // Proceed to Payment
+        initPayment();
+    });
 }
 
 // Helper: Resize Image to reduce storage usage
