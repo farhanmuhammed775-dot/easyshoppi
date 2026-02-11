@@ -339,6 +339,57 @@ function initAdmin() {
             }
         });
     }
+
+    // Render Orders
+    const ordersContainer = document.getElementById('admin-orders');
+    if (ordersContainer) {
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+        if (orders.length === 0) {
+            ordersContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">No orders yet.</p>';
+        } else {
+            ordersContainer.innerHTML = orders.reverse().map(order => {
+                const date = new Date(order.date).toLocaleString();
+                const address = order.address || {};
+                const addressString = `
+                    <p style="margin: 0;"><strong>${address.fullName || 'Unknown'}</strong> (${address.phone || 'N/A'})</p>
+                    <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+                        ${address.area || ''}, ${address.city || ''} - ${address.pincode || ''}<br>
+                        ${address.district || ''}, ${address.state || ''}
+                    </p>
+                `;
+
+                return `
+                <div class="glass-panel" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <h4 style="margin: 0;">Order #${order.id.slice(4, 12)}...</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">${date}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 1.1rem; font-weight: bold; color: var(--accent-color);">₹${(order.total / 100).toFixed(2)}</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h5 style="margin-bottom: 10px; color: var(--text-secondary);">Delivery Details</h5>
+                            ${addressString}
+                        </div>
+                        <div>
+                            <h5 style="margin-bottom: 10px; color: var(--text-secondary);">Items</h5>
+                            <ul style="padding-left: 20px; margin: 0; font-size: 0.9rem;">
+                                ${order.items.map(item => `
+                                    <li>${item.name} x ${item.quantity}</li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+    }
 }
 
 function initCheckout() {

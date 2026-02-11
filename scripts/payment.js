@@ -30,11 +30,13 @@ export function initPayment() {
 
             // Create Order
             const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const address = JSON.parse(localStorage.getItem('deliveryAddress') || '{}');
             orders.push({
                 id: response.razorpay_payment_id,
                 userId: user.email, // using email as id for simplicity
                 items: cart,
                 total: totalAmount,
+                address: address,
                 date: new Date().toISOString()
             });
             localStorage.setItem('orders', JSON.stringify(orders));
