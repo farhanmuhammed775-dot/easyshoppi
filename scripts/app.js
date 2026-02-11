@@ -362,10 +362,12 @@ function initCheckout() {
     const savedAddress = JSON.parse(localStorage.getItem('deliveryAddress'));
     if (savedAddress) {
         document.getElementById('fullName').value = savedAddress.fullName || '';
-        document.getElementById('address').value = savedAddress.address || '';
-        document.getElementById('city').value = savedAddress.city || '';
-        document.getElementById('pincode').value = savedAddress.pincode || '';
         document.getElementById('phone').value = savedAddress.phone || '';
+        document.getElementById('area').value = savedAddress.area || '';
+        document.getElementById('city').value = savedAddress.city || '';
+        document.getElementById('district').value = savedAddress.district || '';
+        document.getElementById('state').value = savedAddress.state || '';
+        document.getElementById('pincode').value = savedAddress.pincode || '';
     }
 
     form.addEventListener('submit', (e) => {
@@ -373,10 +375,12 @@ function initCheckout() {
 
         const addressData = {
             fullName: document.getElementById('fullName').value,
-            address: document.getElementById('address').value,
+            phone: document.getElementById('phone').value,
+            area: document.getElementById('area').value,
             city: document.getElementById('city').value,
-            pincode: document.getElementById('pincode').value,
-            phone: document.getElementById('phone').value
+            district: document.getElementById('district').value,
+            state: document.getElementById('state').value,
+            pincode: document.getElementById('pincode').value
         };
 
         // Save address

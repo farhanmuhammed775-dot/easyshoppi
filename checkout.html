@@ -58,8 +58,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <textarea id="address" rows="3" required placeholder="Street, Apartment, etc."></textarea>
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" required placeholder="9876543210" pattern="[0-9]{10}">
+                </div>
+
+                <div class="form-group">
+                    <label for="area">Area / Street / Sector</label>
+                    <input type="text" id="area" required placeholder="Flat No, Street Name, Area">
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -68,14 +73,20 @@
                         <input type="text" id="city" required placeholder="Mumbai">
                     </div>
                     <div class="form-group">
-                        <label for="pincode">Pincode</label>
-                        <input type="text" id="pincode" required placeholder="400001" pattern="[0-9]{6}">
+                        <label for="district">District</label>
+                        <input type="text" id="district" required placeholder="Mumbai Suburban">
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" required placeholder="9876543210" pattern="[0-9]{10}">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" required placeholder="Maharashtra">
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" required placeholder="400001" pattern="[0-9]{6}">
+                    </div>
                 </div>
 
                 <div style="margin-top: 30px;">
